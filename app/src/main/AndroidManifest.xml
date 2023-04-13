@@ -31,6 +31,7 @@
         <activity android:name=".activities.SettingsActivity"/>
         <activity android:name=".activities.LoginActivity"/>
         <activity android:name=".activities.TrainQueryActivity"/>
+        <activity android:name=".activities.NewsActivity"/>
     </application>
 
 

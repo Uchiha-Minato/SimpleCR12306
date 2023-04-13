@@ -19,7 +19,7 @@ import com.example.cr12306.R;
 public class SettingsActivity extends AppCompatActivity implements View.OnClickListener {
 
     public ImageButton back_setting;
-    public Button btn_login, btn_about;
+    public Button btn_login, btn_about, btn_news;
 
     public Intent intent_settings = new Intent();
     public Intent intent_fromLogin = getIntent();
@@ -50,10 +50,12 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         back_setting = findViewById(R.id.back_setting);
         btn_about = findViewById(R.id.btn_about);
         btn_login = findViewById(R.id.btn_login);
+        btn_news = findViewById(R.id.btn_news);
 
         back_setting.setOnClickListener(this);
         btn_login.setOnClickListener(this);
         btn_about.setOnClickListener(this);
+        btn_news.setOnClickListener(this);
     }
 
     /**
@@ -77,6 +79,11 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                 SettingsActivity.this.finish();
             }
             case R.id.btn_about -> showAboutDialog();
+            case R.id.btn_news -> {
+                intent_settings.setClass(SettingsActivity.this, NewsActivity.class);
+                startActivity(intent_settings);
+                SettingsActivity.this.finish();
+            }
         }
     }
 
