@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:id="@+id/line_top"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:background="@color/teal_200"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/back_lines"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/back"
+            android:scaleType="fitXY"/>
+
+        <TextView
+            android:id="@+id/line_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="中国国家铁路干线"
+            android:textSize="25dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/line_top">
+        <!-- 一级页面 -->
+        <LinearLayout
+            android:layout_marginTop="100dp"
+            android:id="@+id/line_main_buttons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@id/line_top"
+            android:visibility="visible">
+
+            <Button
+                android:id="@+id/btn_cr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="国铁I级客货共线"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/lines_shape"/>
+
+            <Button
+                android:id="@+id/btn_cr_highspeed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="高速线/客运专线"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/lines_shape"/>
+
+        </LinearLayout>
+
+        <!-- 二级页面 -->
+        <include
+            android:id="@+id/include_cr"
+            layout="@layout/china_rails"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/line_top" />
+
+        <!-- 三级页面 -->
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

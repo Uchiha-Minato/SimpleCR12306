@@ -1,4 +1,4 @@
-package com.example.cr12306.activities;
+package com.example.cr12306.activities.more;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;

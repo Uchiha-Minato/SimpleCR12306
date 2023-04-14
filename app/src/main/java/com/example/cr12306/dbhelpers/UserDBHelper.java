@@ -1,4 +1,4 @@
-package com.example.cr12306.utils;
+package com.example.cr12306.dbhelpers;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -7,6 +7,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.cr12306.domain.Users;
+import com.example.cr12306.utils.MyApplication;
 
 public class UserDBHelper extends SQLiteOpenHelper {
 

@@ -1,9 +1,8 @@
-package com.example.cr12306.activities;
+package com.example.cr12306.activities.more;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -15,11 +14,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cr12306.MainActivity;
 import com.example.cr12306.R;
+import com.example.cr12306.activities.crlines.LinesActivity;
 
 public class SettingsActivity extends AppCompatActivity implements View.OnClickListener {
 
     public ImageButton back_setting;
-    public Button btn_login, btn_about, btn_news;
+    public Button btn_login, btn_about, btn_news, btn_lines;
 
     public Intent intent_settings = new Intent();
     public Intent intent_fromLogin = getIntent();
@@ -51,11 +51,13 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         btn_about = findViewById(R.id.btn_about);
         btn_login = findViewById(R.id.btn_login);
         btn_news = findViewById(R.id.btn_news);
+        btn_lines = findViewById(R.id.btn_lines);
 
         back_setting.setOnClickListener(this);
         btn_login.setOnClickListener(this);
         btn_about.setOnClickListener(this);
         btn_news.setOnClickListener(this);
+        btn_lines.setOnClickListener(this);
     }
 
     /**
@@ -83,6 +85,11 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                 intent_settings.setClass(SettingsActivity.this, NewsActivity.class);
                 startActivity(intent_settings);
                 SettingsActivity.this.finish();
+            }
+            case R.id.btn_lines -> {
+                intent_settings.setClass(this, LinesActivity.class);
+                startActivity(intent_settings);
+                this.finish();
             }
         }
     }

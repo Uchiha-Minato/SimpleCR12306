@@ -5,14 +5,15 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.example.cr12306.dbhelpers.UserDBHelper;
 import com.example.cr12306.domain.Users;
 
-public class DBUtils {
+public class UserDBUtils {
 
     private final UserDBHelper dbHelper;
     private SQLiteDatabase database;
 
-    public DBUtils(Context context){
+    public UserDBUtils(Context context){
          dbHelper = new UserDBHelper(context);
     }
 

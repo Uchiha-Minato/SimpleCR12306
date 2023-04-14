@@ -1,4 +1,4 @@
-package com.example.cr12306.activities;
+package com.example.cr12306.activities.more;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -15,13 +15,12 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.cr12306.MainActivity;
 import com.example.cr12306.R;
-import com.example.cr12306.utils.DBUtils;
+import com.example.cr12306.utils.UserDBUtils;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
-    public DBUtils utils = new DBUtils(this);
+    public UserDBUtils utils = new UserDBUtils(this);
     public Intent intent_login = new Intent();
 
     public EditText username, password;

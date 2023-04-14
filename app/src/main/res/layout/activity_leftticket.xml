@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".activities.LeftTicketActivity">
+    tools:context=".activities.tickets.LeftTicketActivity">
 
     <LinearLayout
         android:layout_height="wrap_content"

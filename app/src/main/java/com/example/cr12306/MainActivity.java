@@ -16,11 +16,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.cr12306.activities.LeftTicketActivity;
-import com.example.cr12306.activities.SettingsActivity;
-import com.example.cr12306.activities.TrainEquipmentActivity;
+import com.example.cr12306.activities.tickets.LeftTicketActivity;
+import com.example.cr12306.activities.more.SettingsActivity;
+import com.example.cr12306.activities.query.TrainEquipmentActivity;
 
-import com.example.cr12306.activities.TrainQueryActivity;
+import com.example.cr12306.activities.query.TrainQueryActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.Calendar;

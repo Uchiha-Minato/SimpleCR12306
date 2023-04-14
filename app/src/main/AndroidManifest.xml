@@ -25,13 +25,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.LeftTicketActivity"/>
-        <activity android:name=".activities.TicketDetailActivity"/>
-        <activity android:name=".activities.TrainEquipmentActivity"/>
-        <activity android:name=".activities.SettingsActivity"/>
-        <activity android:name=".activities.LoginActivity"/>
-        <activity android:name=".activities.TrainQueryActivity"/>
-        <activity android:name=".activities.NewsActivity"/>
+        <activity android:name=".activities.tickets.LeftTicketActivity"/>
+        <activity android:name=".activities.tickets.TicketDetailActivity"/>
+        <activity android:name=".activities.query.TrainEquipmentActivity"/>
+        <activity android:name=".activities.more.SettingsActivity"/>
+        <activity android:name=".activities.more.LoginActivity"/>
+        <activity android:name=".activities.query.TrainQueryActivity"/>
+        <activity android:name=".activities.more.NewsActivity"/>
+        <activity android:name=".activities.crlines.LinesActivity"/>
     </application>
 
 
