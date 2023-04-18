@@ -5,12 +5,14 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 
+import com.example.cr12306.utils.CRLineDBUtils;
 import com.example.cr12306.utils.MyApplication;
 
 public class CRLinesDBHelper extends SQLiteOpenHelper {
 
     private static final String DB_NAME = "cr_lines";
     private static final int DB_VER = 1;
+
 
     public CRLinesDBHelper(Context context) {
         super(context, DB_NAME, null, DB_VER);

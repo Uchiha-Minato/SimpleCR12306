@@ -42,7 +42,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@id/line_top"
             android:visibility="visible">
 
             <Button
@@ -72,6 +71,11 @@
             app:layout_constraintTop_toBottomOf="@id/line_top" />
 
         <!-- 三级页面 -->
+        <include
+            android:id="@+id/include_distance"
+            layout="@layout/cr_details"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/line_top" />
 
     </LinearLayout>
 
