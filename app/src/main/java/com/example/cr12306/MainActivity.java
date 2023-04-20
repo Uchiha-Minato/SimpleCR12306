@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     };
     private void showDateInButton(int year, int month, int day){
         choose_date.setText(new StringBuilder().append(year).append("/").
-                append(month).append("/").append(day));
+                append(month + 1).append("/").append(day));
     }
 
     /**

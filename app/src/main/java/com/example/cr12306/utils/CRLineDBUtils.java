@@ -55,6 +55,7 @@ public class CRLineDBUtils {
 
     /**
      * 获取给定线路的车站列表
+     * @param line_name 线路名
      * @return ArrayList<DistanceDetail>
      * */
     @SuppressLint("Range")

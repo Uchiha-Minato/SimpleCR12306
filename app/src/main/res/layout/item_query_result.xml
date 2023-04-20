@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <HorizontalScrollView
+        android:id="@+id/horizontalView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <!-- 表头 -->
+            <TextView
+                android:id="@+id/info_station_name"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="车站名"
+                android:gravity="center"
+                android:textSize="20dp"/>
+            <TextView
+                android:id="@+id/info_station_train_code"
+                android:layout_width="75dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="车次"
+                android:textSize="20dp"/>
+            <TextView
+                android:id="@+id/info_arrive_time"
+                android:layout_width="75dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="到点"
+                android:textSize="20dp"/>
+            <TextView
+                android:id="@+id/info_start_time"
+                android:layout_width="75dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="开点"
+                android:textSize="20dp"/>
+            <TextView
+                android:id="@+id/info_lishi"
+                android:layout_width="75dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="历时"
+                android:textSize="20dp"/>
+            <TextView
+                android:id="@+id/info_arrive_day_str"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="到达时天数"
+                android:textSize="20dp"/>
+        </LinearLayout>
+    </HorizontalScrollView>
+
+</LinearLayout>

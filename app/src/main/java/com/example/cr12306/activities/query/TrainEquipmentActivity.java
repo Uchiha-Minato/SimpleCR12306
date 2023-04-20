@@ -83,8 +83,7 @@ public class TrainEquipmentActivity extends AppCompatActivity {
     private String netWorkRequest(String train_code){
         HttpURLConnection connection;
         BufferedReader reader;
-        String JSONString = "";
-        String result = "";
+        String result;
 
         try{
             //1.建立连接
