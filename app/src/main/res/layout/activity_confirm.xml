@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:background="@color/teal_200">
+
+        <ImageButton
+            android:id="@+id/back_confirm"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/back"
+            android:scaleType="fitXY"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="确认订单"
+            android:textSize="25dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="车次："
+            android:textSize="25dp"
+            android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/confirm_train_code"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="G24"
+            android:gravity="center"
+            android:textSize="25dp"
+            android:textColor="#F44336"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/confirm_start_end"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="上海虹桥-北京南"
+            android:textSize="25dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="出发站："
+            android:textSize="25dp"
+            android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/confirm_from_station"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="上海虹桥"
+            android:textSize="25dp"
+            android:textColor="@color/purple_500"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="目的站："
+            android:textSize="25dp"
+            android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/confirm_to_station"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="北京南"
+            android:textSize="25dp"
+            android:textColor="#2196F3"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/confirm_from_station1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="上海虹桥"
+            android:gravity="center"
+            android:textSize="25dp"
+            android:textColor="#F44336"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" 站开点："
+            android:textSize="25dp"
+            android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/confirm_start_time"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="17:00"
+            android:textSize="25dp"
+            android:textColor="#F44336"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="出发日期  "
+            android:textSize="25dp"
+            android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/confirm_start_day"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="20230510"
+            android:textSize="25dp"
+            android:textColor="@color/purple_500"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="席别  "
+            android:textSize="25dp"
+            android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/confirm_seat_type"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="二等座"
+            android:textSize="25dp"
+            android:textColor="@color/purple_500"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="票价  "
+            android:textSize="25dp"
+            android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/confirm_price"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="￥626"
+            android:textSize="25dp"
+            android:textColor="@color/purple_500"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/choose_seat_ZE"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="10dp"
+        android:visibility="visible">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="偏好座位 二等座"
+            android:textSize="25dp"
+            android:textStyle="bold"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/window"/>
+            <CheckBox
+                android:id="@+id/seat_a"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:checked="true"
+                android:text="A"
+                android:textSize="25dp"/>
+            <CheckBox
+                android:id="@+id/seat_b"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="B"
+                android:textSize="25dp"/>
+            <CheckBox
+                android:id="@+id/seat_c"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="C"
+                android:textSize="25dp"/>
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/aisle"
+                android:layout_gravity="center"/>
+            <CheckBox
+                android:id="@+id/seat_d"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="D"
+                android:textSize="25dp"/>
+            <CheckBox
+                android:id="@+id/seat_f"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="F"
+                android:textSize="25dp"/>
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/window"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/choose_seat_ZY"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="10dp"
+        android:visibility="visible">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="偏好座位 一等座"
+            android:textSize="25dp"
+            android:textStyle="bold"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/window"/>
+            <CheckBox
+                android:id="@+id/seat_a_ZY"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:checked="true"
+                android:text="A"
+                android:textSize="25dp"/>
+
+            <CheckBox
+                android:id="@+id/seat_c_ZY"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="C"
+                android:textSize="25dp"/>
+            <ImageView
+                android:layout_marginStart="10dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/aisle"
+                android:layout_gravity="center"/>
+            <CheckBox
+                android:id="@+id/seat_d_ZY"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="D"
+                android:textSize="25dp"/>
+            <CheckBox
+                android:id="@+id/seat_f_ZY"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="F"
+                android:textSize="25dp"/>
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/window"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_confirm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="提交"/>
+</LinearLayout>

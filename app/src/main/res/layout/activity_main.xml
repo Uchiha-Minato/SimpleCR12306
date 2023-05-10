@@ -82,7 +82,7 @@
                     android:id="@+id/txt_end_station"
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
-                    android:text="桂林北"
+                    android:text="广州"
                     android:layout_gravity="center"
                     android:textSize="30dp"
                     android:singleLine="true"
@@ -113,13 +113,15 @@
                     android:id="@+id/checkbox_common"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="普通"/>
+                    android:text="普通"
+                    android:checked="true"/>
 
                 <CheckBox
                     android:id="@+id/checkbox_student"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="学生"/>
+                    android:text="学生"
+                    android:checked="false"/>
 
             </LinearLayout>
 

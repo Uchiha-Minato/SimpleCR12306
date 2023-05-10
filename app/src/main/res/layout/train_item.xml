@@ -114,6 +114,10 @@
             android:id="@+id/ticket_msg"
             android:singleLine="true"
             android:text="软卧:￥629\u3000硬卧:￥399\u3000硬座:￥236"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:ellipsize="marquee"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </LinearLayout>

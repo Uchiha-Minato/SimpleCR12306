@@ -1,28 +1,40 @@
 package com.example.cr12306.domain;
 
-import java.util.Date;
+import java.io.Serializable;
 
-public class LeftTicket {
-    private String train_no;//车次
-    private String station_train_code;//当前车站车次
-    private String start_station_telecode;//始发站代码
-    private String start_station_name;//始发站名
-    private String end_station_telecode;//终到站代码
-    private String end_station_name;//终到站名
-    private String from_station_telecode;//用户输入起始站代码
-    private String to_station_telecode;//用户输入目的地代码
-    private Date start_time;//起始站发车时间
-    private Date arrive_time;//到达目的地时间
-    private int day_difference;//行车天数变化
-    private String train_class_name;//列车类型
-    private Date lishi;//历时
-    private String start_train_date;//始发站发车日期
-    private int controlled_train_flag;//是否受控车次标记
-    private String controlled_train_message;//是否受控车次信息
+public class LeftTicket implements Serializable {
+    public String date;//乘车日期
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String train_no;//车次
+    public String station_train_code;//当前车站车次
+    public String start_station_telecode;//始发站代码
+    public String start_station_name;//始发站名
+    public String end_station_telecode;//终到站代码
+    public String end_station_name;//终到站名
+    public String from_station_telecode;//用户输入起始站代码
+    public String from_station_name;
+    public String to_station_telecode;//用户输入目的地代码
+    public String to_station_name;
+    public String start_time;//起始站发车时间
+    public String arrive_time;//到达目的地时间
+    public int day_difference;//行车天数变化
+    public String train_class_name;//列车类型
+    public String lishi;//历时
+    public String start_train_date;//始发站发车日期
+    public int controlled_train_flag;//是否受控车次标记
+    public String controlled_train_message;//是否受控车次信息
 
     //由于个人开发者无法连接国铁余票数据库，官网余票数据接口返回的是是否有这一坐席
     //于是直接令以下字段为布尔：
-    //0 无此坐席 1 有此坐席
+    //false 无此坐席 true 有此坐席
     private boolean rw_num;//软卧
     private boolean srrb_num;//动卧
     private boolean gr_num;//高级软卧
@@ -45,6 +57,22 @@ public class LeftTicket {
     private String ze_price;//二等座票价
     private String swz_price;//商务座票价
     private String srrb_price;//动卧票价
+
+    public String getStart_station_name() {
+        return start_station_name;
+    }
+
+    public void setStart_station_name(String start_station_name) {
+        this.start_station_name = start_station_name;
+    }
+
+    public String getEnd_station_name() {
+        return end_station_name;
+    }
+
+    public void setEnd_station_name(String end_station_name) {
+        this.end_station_name = end_station_name;
+    }
 
     public String getTrain_no() {
         return train_no;
@@ -86,6 +114,22 @@ public class LeftTicket {
         this.from_station_telecode = from_station_telecode;
     }
 
+    public String getFrom_station_name() {
+        return from_station_name;
+    }
+
+    public void setFrom_station_name(String from_station_name) {
+        this.from_station_name = from_station_name;
+    }
+
+    public String getTo_station_name() {
+        return to_station_name;
+    }
+
+    public void setTo_station_name(String to_station_name) {
+        this.to_station_name = to_station_name;
+    }
+
     public String getTo_station_telecode() {
         return to_station_telecode;
     }
@@ -94,19 +138,19 @@ public class LeftTicket {
         this.to_station_telecode = to_station_telecode;
     }
 
-    public Date getStart_time() {
+    public String getStart_time() {
         return start_time;
     }
 
-    public void setStart_time(Date start_time) {
+    public void setStart_time(String start_time) {
         this.start_time = start_time;
     }
 
-    public Date getArrive_time() {
+    public String getArrive_time() {
         return arrive_time;
     }
 
-    public void setArrive_time(Date arrive_time) {
+    public void setArrive_time(String arrive_time) {
         this.arrive_time = arrive_time;
     }
 
@@ -126,11 +170,11 @@ public class LeftTicket {
         this.train_class_name = train_class_name;
     }
 
-    public Date getLishi() {
+    public String getLishi() {
         return lishi;
     }
 
-    public void setLishi(Date lishi) {
+    public void setLishi(String lishi) {
         this.lishi = lishi;
     }
 
