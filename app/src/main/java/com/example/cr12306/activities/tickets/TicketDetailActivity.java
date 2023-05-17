@@ -1,12 +1,12 @@
 package com.example.cr12306.activities.tickets;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
+import android.view.View;
 import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -43,6 +43,7 @@ public class TicketDetailActivity extends AppCompatActivity {
     public TextView txt_train_code, txt_details;
     public TextView detail_from_station, detail_train_no, detail_date, detail_start_time;
     public TextView detail_to_station, detail_arrive_time, detail_day_difference;
+    public TextView txt_if_student;
     public RecyclerView recyclerView;
     public RecyclerView recyclerView_buy_ticket;
     //public Button btn_buy_ticket;
@@ -61,6 +62,7 @@ public class TicketDetailActivity extends AppCompatActivity {
             ticket.setDate(getIntent().getStringExtra("date"));
         }
 
+        txt_if_student = findViewById(R.id.txt_if_student);
         try {
             initBuyList();
         } catch (Exception e) {
@@ -74,11 +76,7 @@ public class TicketDetailActivity extends AppCompatActivity {
     public void initView() {
         back2 = findViewById(R.id.back2);
         back2.setOnClickListener(view -> {
-            Intent back2 = new Intent(TicketDetailActivity.this, LeftTicketActivity.class);
-            back2.putExtra("date", ticket.getDate());
-            back2.putExtra("start_station", getIntent().getCharSequenceExtra("start_station"));
-            back2.putExtra("end_station", getIntent().getCharSequenceExtra("end_station"));
-            startActivity(back2);
+            finish();
         });
 
         txt_train_code = findViewById(R.id.txt_train_code);
@@ -107,7 +105,6 @@ public class TicketDetailActivity extends AppCompatActivity {
         detail_arrive_time.setText(ticket.getArrive_time());
         detail_day_difference = findViewById(R.id.detail_day_difference);
         detail_day_difference.setText("+" + ticket.getDay_difference());
-
 
         recyclerView = findViewById(R.id.simple_timeTable);
         new Thread(new Runnable() {
@@ -250,70 +247,151 @@ public class TicketDetailActivity extends AppCompatActivity {
 
     public void initBuyList() throws Exception {
 
-        if(ticket.isSwz_num()) {
-            BuyTicket buyTicket = new BuyTicket();
-            buyTicket.setSeat_type("商务座");
-            buyTicket.setPrice(ticket.getSwz_price());
-            ClassUtils.copyFatherToChild(ticket, buyTicket);
-            buyTicketArrayList.add(buyTicket);
-        }
-        if(ticket.isZy_num()) {
-            BuyTicket buyTicket = new BuyTicket();
-            buyTicket.setSeat_type("一等座");
-            buyTicket.setPrice(ticket.getZy_price());
-            ClassUtils.copyFatherToChild(ticket, buyTicket);
-            buyTicketArrayList.add(buyTicket);
-        }
-        if(ticket.isZe_num()) {
-            BuyTicket buyTicket = new BuyTicket();
-            buyTicket.setSeat_type("二等座");
-            buyTicket.setPrice(ticket.getZe_price());
-            ClassUtils.copyFatherToChild(ticket, buyTicket);
-            buyTicketArrayList.add(buyTicket);
-        }
-        if(ticket.isSrrb_num()) {
-            BuyTicket buyTicket = new BuyTicket();
-            buyTicket.setSeat_type("动卧");
-            buyTicket.setPrice(ticket.getSrrb_price());
-            ClassUtils.copyFatherToChild(ticket, buyTicket);
-            buyTicketArrayList.add(buyTicket);
-        }
-        if(ticket.isGr_num()) {
-            BuyTicket buyTicket = new BuyTicket();
-            buyTicket.setSeat_type("高级软卧");
-            buyTicket.setPrice(ticket.getGr_price());
-            ClassUtils.copyFatherToChild(ticket, buyTicket);
-            buyTicketArrayList.add(buyTicket);
-        }
-        if(ticket.isRw_num()) {
-            BuyTicket buyTicket = new BuyTicket();
-            buyTicket.setSeat_type("软卧");
-            buyTicket.setPrice(ticket.getRw_price());
-            ClassUtils.copyFatherToChild(ticket, buyTicket);
-            buyTicketArrayList.add(buyTicket);
-        }
-        if(ticket.isYw_num()) {
-            BuyTicket buyTicket = new BuyTicket();
-            buyTicket.setSeat_type("硬卧");
-            buyTicket.setPrice(ticket.getYw_price());
-            ClassUtils.copyFatherToChild(ticket, buyTicket);
-            buyTicketArrayList.add(buyTicket);
-        }
-        if(ticket.isYz_num()) {
-            BuyTicket buyTicket = new BuyTicket();
-            buyTicket.setSeat_type("硬座");
-            buyTicket.setPrice(ticket.getYz_price());
-            ClassUtils.copyFatherToChild(ticket, buyTicket);
-            buyTicketArrayList.add(buyTicket);
-        }
-        if(ticket.isWz_num()) {
-            BuyTicket buyTicket = new BuyTicket();
-            buyTicket.setSeat_type("无座");
-            buyTicket.setPrice(ticket.getWz_price());
-            ClassUtils.copyFatherToChild(ticket, buyTicket);
-            buyTicketArrayList.add(buyTicket);
-        }
+        if(getIntent().getStringExtra("type").equals("学生票")) {
 
+            txt_if_student.setVisibility(View.VISIBLE);
 
+            if (ticket.isSwz_num()) {
+                BuyTicket buyTicket = new BuyTicket();
+                buyTicket.setSeat_type("商务座");
+                buyTicket.setPrice(ticket.getSwz_price());
+                ClassUtils.copyFatherToChild(ticket, buyTicket);
+                buyTicketArrayList.add(buyTicket);
+            }
+            if (ticket.isZy_num()) {
+                BuyTicket buyTicket = new BuyTicket();
+                buyTicket.setSeat_type("一等座");
+                buyTicket.setPrice(ticket.getZy_price());
+                ClassUtils.copyFatherToChild(ticket, buyTicket);
+                buyTicketArrayList.add(buyTicket);
+            }
+            if (ticket.isZe_num()) {
+                BuyTicket buyTicket = new BuyTicket();
+                buyTicket.setSeat_type("二等座");
+                double price = Double.parseDouble(ticket.getZe_price());
+                price = price * 0.75;
+                @SuppressLint("DefaultLocale") String priceFinal = String.format("%.1f", price);
+                buyTicket.setPrice(priceFinal);
+                ClassUtils.copyFatherToChild(ticket, buyTicket);
+                buyTicketArrayList.add(buyTicket);
+            }
+            if (ticket.isSrrb_num()) {
+                BuyTicket buyTicket = new BuyTicket();
+                buyTicket.setSeat_type("动卧");
+                buyTicket.setPrice(ticket.getSrrb_price());
+                ClassUtils.copyFatherToChild(ticket, buyTicket);
+                buyTicketArrayList.add(buyTicket);
+            }
+            if (ticket.isGr_num()) {
+                BuyTicket buyTicket = new BuyTicket();
+                buyTicket.setSeat_type("高级软卧");
+                buyTicket.setPrice(ticket.getGr_price());
+                ClassUtils.copyFatherToChild(ticket, buyTicket);
+                buyTicketArrayList.add(buyTicket);
+            }
+            if (ticket.isRw_num()) {
+                BuyTicket buyTicket = new BuyTicket();
+                buyTicket.setSeat_type("软卧");
+                buyTicket.setPrice(ticket.getRw_price());
+                ClassUtils.copyFatherToChild(ticket, buyTicket);
+                buyTicketArrayList.add(buyTicket);
+            }
+            if (ticket.isYw_num()) {
+                BuyTicket buyTicket = new BuyTicket();
+                buyTicket.setSeat_type("硬卧");
+                double price = Double.parseDouble(ticket.getYw_price());
+                price = price * 0.75;
+                @SuppressLint("DefaultLocale") String priceFinal = String.format("%.1f", price);
+                buyTicket.setPrice(priceFinal);
+                ClassUtils.copyFatherToChild(ticket, buyTicket);
+                buyTicketArrayList.add(buyTicket);
+            }
+            if (ticket.isYz_num()) {
+                BuyTicket buyTicket = new BuyTicket();
+                buyTicket.setSeat_type("硬座");
+                double price = Double.parseDouble(ticket.getYz_price());
+                price = price * 0.75;
+                @SuppressLint("DefaultLocale") String priceFinal = String.format("%.1f", price);
+                buyTicket.setPrice(priceFinal);
+                ClassUtils.copyFatherToChild(ticket, buyTicket);
+                buyTicketArrayList.add(buyTicket);
+            }
+            if (ticket.isWz_num()) {
+                BuyTicket buyTicket = new BuyTicket();
+                buyTicket.setSeat_type("无座");
+                double price = Double.parseDouble(ticket.getWz_price());
+                price = price * 0.75;
+                @SuppressLint("DefaultLocale") String priceFinal = String.format("%.1f", price);
+                buyTicket.setPrice(priceFinal);
+                ClassUtils.copyFatherToChild(ticket, buyTicket);
+                buyTicketArrayList.add(buyTicket);
+            }
+
+        } else {
+            txt_if_student.setVisibility(View.GONE);
+            if (ticket.isSwz_num()) {
+                BuyTicket buyTicket = new BuyTicket();
+                buyTicket.setSeat_type("商务座");
+                buyTicket.setPrice(ticket.getSwz_price());
+                ClassUtils.copyFatherToChild(ticket, buyTicket);
+                buyTicketArrayList.add(buyTicket);
+            }
+            if (ticket.isZy_num()) {
+                BuyTicket buyTicket = new BuyTicket();
+                buyTicket.setSeat_type("一等座");
+                buyTicket.setPrice(ticket.getZy_price());
+                ClassUtils.copyFatherToChild(ticket, buyTicket);
+                buyTicketArrayList.add(buyTicket);
+            }
+            if (ticket.isZe_num()) {
+                BuyTicket buyTicket = new BuyTicket();
+                buyTicket.setSeat_type("二等座");
+                buyTicket.setPrice(ticket.getZe_price());
+                ClassUtils.copyFatherToChild(ticket, buyTicket);
+                buyTicketArrayList.add(buyTicket);
+            }
+            if (ticket.isSrrb_num()) {
+                BuyTicket buyTicket = new BuyTicket();
+                buyTicket.setSeat_type("动卧");
+                buyTicket.setPrice(ticket.getSrrb_price());
+                ClassUtils.copyFatherToChild(ticket, buyTicket);
+                buyTicketArrayList.add(buyTicket);
+            }
+            if (ticket.isGr_num()) {
+                BuyTicket buyTicket = new BuyTicket();
+                buyTicket.setSeat_type("高级软卧");
+                buyTicket.setPrice(ticket.getGr_price());
+                ClassUtils.copyFatherToChild(ticket, buyTicket);
+                buyTicketArrayList.add(buyTicket);
+            }
+            if (ticket.isRw_num()) {
+                BuyTicket buyTicket = new BuyTicket();
+                buyTicket.setSeat_type("软卧");
+                buyTicket.setPrice(ticket.getRw_price());
+                ClassUtils.copyFatherToChild(ticket, buyTicket);
+                buyTicketArrayList.add(buyTicket);
+            }
+            if (ticket.isYw_num()) {
+                BuyTicket buyTicket = new BuyTicket();
+                buyTicket.setSeat_type("硬卧");
+                buyTicket.setPrice(ticket.getYw_price());
+                ClassUtils.copyFatherToChild(ticket, buyTicket);
+                buyTicketArrayList.add(buyTicket);
+            }
+            if (ticket.isYz_num()) {
+                BuyTicket buyTicket = new BuyTicket();
+                buyTicket.setSeat_type("硬座");
+                buyTicket.setPrice(ticket.getYz_price());
+                ClassUtils.copyFatherToChild(ticket, buyTicket);
+                buyTicketArrayList.add(buyTicket);
+            }
+            if (ticket.isWz_num()) {
+                BuyTicket buyTicket = new BuyTicket();
+                buyTicket.setSeat_type("无座");
+                buyTicket.setPrice(ticket.getWz_price());
+                ClassUtils.copyFatherToChild(ticket, buyTicket);
+                buyTicketArrayList.add(buyTicket);
+            }
+        }
     }
 }

@@ -67,14 +67,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.back_setting -> {
-                intent_settings.setClass(SettingsActivity.this, MainActivity.class);
-                if(intent_fromLogin != null) {
-                    intent_settings.putExtra("username", intent_fromLogin.getStringExtra("username"));
-                }
-                startActivity(intent_settings);
-                SettingsActivity.this.finish();
-            }
+            case R.id.back_setting -> SettingsActivity.this.finish();
             case R.id.btn_login -> {
                 intent_settings.setClass(SettingsActivity.this, LoginActivity.class);
                 startActivity(intent_settings);

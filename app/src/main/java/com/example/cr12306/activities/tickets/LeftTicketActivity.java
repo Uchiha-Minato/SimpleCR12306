@@ -18,10 +18,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.cr12306.MainActivity;
 import com.example.cr12306.R;
 import com.example.cr12306.adapter.TicketAdapter;
 import com.example.cr12306.domain.LeftTicket;
+import com.example.cr12306.domain.Station;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -52,25 +52,24 @@ public class LeftTicketActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_leftticket);
 
-        Intent back = new Intent();
-        back.setClass(LeftTicketActivity.this, MainActivity.class);
         back1 = findViewById(R.id.back1);
         back1.setOnClickListener(view -> {
-            startActivity(back);
             LeftTicketActivity.this.finish();
         });
 
         query_result = findViewById(R.id.query_result);
         query_result.setText(getIntent().getCharSequenceExtra("start_station")
-                + "-" + getIntent().getCharSequenceExtra("end_station"));
+                + "-" + getIntent().getCharSequenceExtra("end_station") + " "
+                + getIntent().getStringExtra("type"));
 
         btn_back = findViewById(R.id.query_back);
         btn_back.setOnClickListener( view -> {
-            startActivity(back);
             LeftTicketActivity.this.finish();
         });
 
         String date = getIntent().getStringExtra("date");
+        Station bundle_start = (Station) getIntent().getSerializableExtra("bundle_start_station");
+        Station bundle_end = (Station) getIntent().getSerializableExtra("bundle_end_station");
         if(date == null)
             date = "2023-05-13";
         String finalDate = date;
@@ -79,7 +78,7 @@ public class LeftTicketActivity extends AppCompatActivity {
             @Override
             public void run() {
                 //暂时写死
-                String result = leftTicketQuery(finalDate, "GBZ", "WHN");
+                String result = leftTicketQuery(finalDate, bundle_start.getTelecode(), bundle_end.getTelecode());
                 Message msg = new Message();
                 msg.what = 0;
                 msg.obj = result;
@@ -108,6 +107,7 @@ public class LeftTicketActivity extends AppCompatActivity {
             next.putExtra("lishi", tickets.get(position).getLishi());
             next.putExtra("start_station", getIntent().getCharSequenceExtra("start_station"));
             next.putExtra("end_station", getIntent().getCharSequenceExtra("end_station"));
+            next.putExtra("type", getIntent().getStringExtra("type"));
 
             Bundle bundle = new Bundle();
             bundle.putSerializable("leftTicket", tickets.get(position));
@@ -350,10 +350,29 @@ public class LeftTicketActivity extends AppCompatActivity {
                 Toast.makeText(LeftTicketActivity.this, "主线程收到消息", Toast.LENGTH_SHORT).show();
                 //处理JSON字符串
                 tickets = parseLeftTicketJSONData(data);
+                //判断是否筛选只看高铁动车
+                if(getIntent().getStringExtra("filtration").equals("只看高铁动车")) {
+                    tickets = filtrateZTK(tickets);
+                    Toast.makeText(LeftTicketActivity.this, "筛选：只看高铁动车", Toast.LENGTH_SHORT).show();
+                }
                 //更新RecyclerView
                 initRecyclerView(tickets);
                 Toast.makeText(LeftTicketActivity.this, "主线程更新视图", Toast.LENGTH_SHORT).show();
             }
         }
     };
+    /**
+     * 筛选：只看高铁/动车
+     * */
+    private ArrayList<LeftTicket> filtrateZTK(ArrayList<LeftTicket> list) {
+        ArrayList<LeftTicket> result = new ArrayList<>();
+
+        for(LeftTicket ticket : list) {
+            String station_train_code = ticket.getStation_train_code();
+            if(station_train_code.startsWith("G") || station_train_code.startsWith("D"))
+                result.add(ticket);
+        }
+
+        return result;
+    }
 }

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:background="@color/teal_200">
+
+        <ImageButton
+            android:id="@+id/back_choose_station"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/back"
+            android:scaleType="fitXY"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="选择车站"
+            android:textSize="25dp"/>
+
+    </LinearLayout>
+
+   <!-- <Button
+        android:id="@+id/test1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="初始化数据库"/>-->
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/edit_query_station"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:hint="输入车站名搜索车站..."/>
+        <Button
+            android:id="@+id/btn_query_station"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="搜索"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="常用车站"
+        android:textSize="25dp"
+        android:textStyle="bold"/>
+
+    <TableLayout
+        android:id="@+id/table_common_use"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="*">
+
+        <TableRow>
+            <Button
+                android:id="@+id/beijing"
+                android:layout_width="1dip"
+                android:layout_height="wrap_content"
+                android:text="北京"/>
+            <Button
+                android:id="@+id/shanghai"
+                android:layout_width="1dip"
+                android:layout_height="wrap_content"
+                android:text="上海"/>
+            <Button
+                android:id="@+id/guangzhou"
+                android:layout_width="1dip"
+                android:layout_height="wrap_content"
+                android:text="广州"/>
+        </TableRow>
+        <TableRow>
+            <Button
+                android:id="@+id/wuhan"
+                android:layout_width="1dip"
+                android:layout_height="wrap_content"
+                android:text="武汉"/>
+            <Button
+                android:id="@+id/shenzhen"
+                android:layout_width="1dip"
+                android:layout_height="wrap_content"
+                android:text="深圳"/>
+            <Button
+                android:id="@+id/chengdu"
+                android:layout_width="1dip"
+                android:layout_height="wrap_content"
+                android:text="成都"/>
+        </TableRow>
+        <TableRow>
+            <Button
+                android:id="@+id/guilin"
+                android:layout_width="1dip"
+                android:layout_height="wrap_content"
+                android:text="桂林"/>
+            <Button
+                android:id="@+id/chongqing"
+                android:layout_width="1dip"
+                android:layout_height="wrap_content"
+                android:text="重庆"/>
+            <Button
+                android:id="@+id/lanzhou"
+                android:layout_width="1dip"
+                android:layout_height="wrap_content"
+                android:text="兰州"/>
+        </TableRow>
+    </TableLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="搜索结果"
+        android:textSize="25dp"
+        android:textStyle="bold"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView_query_station"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

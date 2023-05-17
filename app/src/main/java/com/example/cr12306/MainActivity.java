@@ -20,7 +20,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.cr12306.activities.more.SettingsActivity;
 import com.example.cr12306.activities.query.TrainEquipmentActivity;
 import com.example.cr12306.activities.query.TrainQueryActivity;
+import com.example.cr12306.activities.tickets.ChooseStationActivity;
 import com.example.cr12306.activities.tickets.LeftTicketActivity;
+import com.example.cr12306.domain.Station;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.Calendar;
@@ -41,8 +43,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public BottomNavigationView navigationView;
 
-    //已登录用户的用户名信息传递
-    public Intent intent_fromLogin = getIntent();
+    public Station start_station = new Station();
+    public Station end_station = new Station();
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -53,6 +55,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         //连接SQLiteStudio
         SQLiteStudioService.instance().start(this);
+
+        //设置缺省值
+        start_station.setStation_name("北京");
+        start_station.setTelecode("BJP");
+        end_station.setStation_name("广州");
+        end_station.setTelecode("GZQ");
 
         initButtons();
         initBottomNavView();
@@ -65,9 +73,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         txt_start_station = findViewById(R.id.txt_start_station);
         txt_end_station = findViewById(R.id.txt_end_station);
 
-
     }
 
+    /**
+     * 当Activity重新获得焦点时调用
+     * */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        assert data != null;
+        Station station = (Station) data.getSerializableExtra("station");
+        switch (requestCode) {
+            case 0 -> {
+                txt_start_station.setText(station.getStation_name());
+                start_station = station;
+            }
+            case 1 -> {
+                txt_end_station.setText(station.getStation_name());
+                end_station = station;
+            }
+        }
+    }
 
     /**
      * 日期选择框
@@ -133,16 +159,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View view) {
+
+        //进选择车站界面用
+        int requestCode;
+
         switch (view.getId()) {
             case R.id.btn_query -> {
 
-                if(choose_date.getText() == "选择") {
+                if(choose_date.getText().toString().equals("选择")) {
                     Toast.makeText(this, "请选择日期", Toast.LENGTH_SHORT).show();
                 } else {
                     intent.setClass(MainActivity.this, LeftTicketActivity.class);
                     intent.putExtra("start_station", txt_start_station.getText());
                     intent.putExtra("end_station", txt_end_station.getText());
                     intent.putExtra("date", choose_date.getText());
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("bundle_start_station", start_station);
+                    bundle.putSerializable("bundle_end_station", end_station);
+                    intent.putExtras(bundle);
+
+                    if(checkBox_student.isChecked())
+                        intent.putExtra("type", "学生票");
+                    if(checkBox_common.isChecked())
+                        intent.putExtra("type", "普通票");
+
+                    if(checkBox_chooseType.isChecked())
+                        intent.putExtra("filtration", "只看高铁动车");
 
                     startActivity(intent);
                 }
@@ -153,12 +195,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 temp = txt_start_station.getText();
                 txt_start_station.setText(txt_end_station.getText());
                 txt_end_station.setText(temp);
+
+                Station tmp;
+                tmp = start_station;
+                start_station = end_station;
+                end_station = tmp;
             }
             case R.id.btn_start_station -> {
-
+                intent.setClass(this, ChooseStationActivity.class);
+                requestCode = 0;
+                intent.putExtra("requestCode", requestCode);
+                startActivityForResult(intent, requestCode);
             }
             case R.id.btn_end_station -> {
-                //
+                intent.setClass(this, ChooseStationActivity.class);
+                requestCode = 1;
+                intent.putExtra("requestCode", requestCode);
+                startActivityForResult(intent, requestCode);
             }
         }
     }

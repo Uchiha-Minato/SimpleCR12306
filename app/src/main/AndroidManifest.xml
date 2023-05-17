@@ -4,6 +4,11 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32"
+        tools:ignore="ScopedStorage" />
 
     <application
         android:allowBackup="true"
@@ -34,6 +39,7 @@
         <activity android:name=".activities.more.NewsActivity"/>
         <activity android:name=".activities.crlines.LinesActivity"/>
         <activity android:name=".activities.tickets.ConfirmOrderActivity"/>
+        <activity android:name=".activities.tickets.ChooseStationActivity"/>
     </application>
 
 

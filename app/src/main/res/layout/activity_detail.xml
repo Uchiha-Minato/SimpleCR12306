@@ -161,6 +161,15 @@
 
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/txt_if_student"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:singleLine="true"
+        android:text="学生票票价仅供参考，实际以发售票价为准"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView_buy_ticket"
         android:layout_width="match_parent"
