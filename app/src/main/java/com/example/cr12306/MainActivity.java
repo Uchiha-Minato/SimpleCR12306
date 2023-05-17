@@ -81,16 +81,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        assert data != null;
-        Station station = (Station) data.getSerializableExtra("station");
-        switch (requestCode) {
-            case 0 -> {
-                txt_start_station.setText(station.getStation_name());
-                start_station = station;
-            }
-            case 1 -> {
-                txt_end_station.setText(station.getStation_name());
-                end_station = station;
+        if(resultCode != 2) {
+            Station station = (Station) data.getSerializableExtra("station");
+            switch (resultCode) {
+                case 0 -> {
+                    txt_start_station.setText(station.getStation_name());
+                    start_station = station;
+                }
+                case 1 -> {
+                    txt_end_station.setText(station.getStation_name());
+                    end_station = station;
+                }
             }
         }
     }

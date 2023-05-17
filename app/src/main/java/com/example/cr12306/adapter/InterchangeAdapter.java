@@ -41,7 +41,7 @@ public class InterchangeAdapter extends RecyclerView.Adapter<InterchangeAdapter.
         holder.arrive_time.setText(plan.getArrive_time());
         holder.middle_station.setText("中转站(地)：" + plan.getMiddle_station());
         holder.first_trip.setText(plan.getFirst_station_train_code()
-                + " " + plan.getFirst_start_station_name() + "-" + plan.getFirst_to_station_name());
+                + " " + plan.getFirst_from_station_name() + "-" + plan.getFirst_to_station_name());
         holder.second_trip.setText(plan.getSecond_station_train_code()
                 + " " + plan.getSecond_from_station_name() + "-" + plan.getSecond_to_station_name());
 

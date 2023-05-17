@@ -251,17 +251,20 @@ public class TransDetailActivity extends AppCompatActivity {
                 dialog.setTitle("详细换乘方案");
                 String message1 = "出发日期：" + plan.getFirst_start_train_date()
                         + "\n第一程：\n" + plan.getFirst_station_train_code() + " "
-                        + plan.getFirst_from_station_name() + "-" + plan.getFirst_end_station_name()
-                        + " 历时" + plan.getFirst_lishi() + "\n到点 " + plan.getFirst_arrive_time();
+                        + plan.getFirst_start_station_name() + "-" + plan.getFirst_end_station_name()
+                        + "\n出发站：" + plan.getFirst_from_station_name() + "  到达站：" + plan.getFirst_to_station_name()
+                        + "\n历时：" + plan.getFirst_lishi() + "\n到点：" + plan.getFirst_arrive_time();
                 String message2 = "\n中转站(地)：" + plan.getMiddle_date() +" "+ plan.getMiddle_station();
                 String message3 = "\n中转时长：" + plan.getWait_time();
-                String message4 = "\n第二程：\n" + plan.getSecond_station_train_code() + " "
+                String message4 = "\n\n第二程：\n" + plan.getSecond_station_train_code() + " "
                         + plan.getSecond_start_station_name() + "-" +plan.getSecond_end_station_name()
-                        + " 历时" + plan.getSecond_lishi() + "\n到点 " + plan.getSecond_arrive_time();
+                        + "\n出发站：" + plan.getSecond_from_station_name() + "  到达站：" + plan.getSecond_to_station_name()
+                        + "\n历时：" + plan.getSecond_lishi() + "\n到点：" + plan.getSecond_arrive_time();
                 dialog.setMessage(message1 + message2 + message3 + message4);
                 dialog.setPositiveButton("好", ((dialog1, which) -> {
-                    copyToClipboard(message1 + message2 + message3 + message4);
+
                 }));
+                dialog.setNegativeButton("复制以上信息", ((dialog1, which) -> copyToClipboard(message1 + message2 + message3 + message4)));
                 dialog.show();
             }
         });

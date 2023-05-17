@@ -10,13 +10,13 @@ public class Interchange {
     public String from_station_name;//起始站车站名
 
     //第一趟车
-    public String first_start_station_name;
+    public String first_start_station_name;//始发站
     public String first_start_time;
     public String first_start_train_date;
     public String first_station_train_code;
-    public String first_to_station_name;
+    public String first_to_station_name;//目的站
     public String first_lishi;
-    public String first_from_station_name;//始发站
+    public String first_from_station_name;//起始站
     public String first_end_station_name;//终到站
     public String first_arrive_time;
     //第二趟车
@@ -24,9 +24,9 @@ public class Interchange {
     public String second_start_time;
     public String second_start_train_date;
     public String second_station_train_code;
-    public String second_to_station_name;
+    public String second_to_station_name;//目的站
     public String second_lishi;
-    public String second_from_station_name;
+    public String second_from_station_name;//起始站
     public String second_end_station_name;//终到站
     public String second_arrive_time;
 

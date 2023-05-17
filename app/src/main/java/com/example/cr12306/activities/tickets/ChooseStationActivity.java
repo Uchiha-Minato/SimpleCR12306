@@ -89,10 +89,8 @@ public class ChooseStationActivity extends AppCompatActivity implements View.OnC
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.back_choose_station -> {
-                Toast.makeText(this, "默认返回北京，建议重新选择", Toast.LENGTH_SHORT).show();
-                station.setStation_name("北京");
-                station.setTelecode("BJP");
-                packUpBundle(station);
+                setResult(2);
+                finish();
             }
             case R.id.btn_query_station -> {
                 String stationName = editText.getText().toString();
@@ -120,7 +118,7 @@ public class ChooseStationActivity extends AppCompatActivity implements View.OnC
             }
             case R.id.wuhan -> {
                 station.setStation_name("武汉");
-                station.setTelecode("WHH");
+                station.setTelecode("WHN");
                 packUpBundle(station);
             }
             case R.id.shenzhen -> {
@@ -171,8 +169,7 @@ public class ChooseStationActivity extends AppCompatActivity implements View.OnC
         Bundle bundle = new Bundle();
         bundle.putSerializable("station", station);
         intent.putExtras(bundle);
-        //intent.putExtra("flag", intent_fromMain.getStringExtra("flag"));
-        setResult(requestCode, intent);
+        setResult(requestCode, intent);//这里的requestCode就是MainActivity收到的resultCode
         finish();
     }
 }
