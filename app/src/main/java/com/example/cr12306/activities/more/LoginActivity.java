@@ -66,7 +66,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     Toast.makeText(this, "欢迎你，" + result, Toast.LENGTH_SHORT).show();
                     intent_login.setClass(LoginActivity.this, SettingsActivity.class);
                     intent_login.putExtra("username", result);
-                    startActivity(intent_login);
+                    int requestCode = 1;
+                    setResult(requestCode, intent_login);
                     LoginActivity.this.finish();
                 } else {
                     final AlertDialog.Builder dialog = new AlertDialog.Builder(LoginActivity.this);
@@ -81,9 +82,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             case R.id.sign_up -> signUpDialog();
             case R.id.forget_password -> forgetPwdDialog();
             case R.id.back_login -> {
-                //后续还需根据Intent判断是否从购票确认订单界面来
-                intent_login.setClass(LoginActivity.this, SettingsActivity.class);
-                startActivity(intent_login);
+                int requestCode = 0;
+                setResult(requestCode);
                 LoginActivity.this.finish();
             }
         }

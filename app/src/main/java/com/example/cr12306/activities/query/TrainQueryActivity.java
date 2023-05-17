@@ -3,7 +3,6 @@ package com.example.cr12306.activities.query;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -24,7 +23,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.cr12306.MainActivity;
 import com.example.cr12306.R;
 import com.example.cr12306.adapter.TrainInfoAdapter;
 import com.example.cr12306.domain.TrainInfo;
@@ -43,8 +41,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 public class TrainQueryActivity extends AppCompatActivity implements View.OnClickListener{
-
-    public Intent intent_query = new Intent();
 
     public ImageButton back_trainQuery;
 
@@ -141,11 +137,7 @@ public class TrainQueryActivity extends AppCompatActivity implements View.OnClic
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.back_trainQuery -> {
-                intent_query.setClass(TrainQueryActivity.this, MainActivity.class);
-                startActivity(intent_query);
-                TrainQueryActivity.this.finish();
-            }
+            case R.id.back_trainQuery -> TrainQueryActivity.this.finish();
             case R.id.train_query -> {
                 String trainNo = train_no.getText().toString();
                 String date = choose_date.getText().toString();

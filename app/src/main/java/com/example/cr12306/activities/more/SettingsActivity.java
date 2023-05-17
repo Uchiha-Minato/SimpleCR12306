@@ -24,6 +24,8 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
     public Intent intent_settings = new Intent();
     public Intent intent_fromLogin = getIntent();
 
+    public int resultCode;
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,15 +34,15 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_settings);
 
         initViews();
+    }
 
-        //有bug
-        if(intent_fromLogin != null ){
-            //若是从登陆页面过来登陆成功了，就显示登录了的用户名
-            btn_login.setText(intent_fromLogin.getStringExtra("username"));
-            //Log.d("Test", intent_fromLogin.getStringExtra("username"));
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        //更新界面：登陆成功
+        if(resultCode == 1) {
+            btn_login.setText(data.getStringExtra("username"));
         }
-
-
     }
 
     /**
@@ -70,8 +72,8 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
             case R.id.back_setting -> SettingsActivity.this.finish();
             case R.id.btn_login -> {
                 intent_settings.setClass(SettingsActivity.this, LoginActivity.class);
-                startActivity(intent_settings);
-                SettingsActivity.this.finish();
+                resultCode = 1;
+                startActivityForResult(intent_settings, resultCode);
             }
             case R.id.btn_about -> showAboutDialog();
             case R.id.btn_news -> {

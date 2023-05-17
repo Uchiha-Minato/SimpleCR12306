@@ -1,7 +1,6 @@
 package com.example.cr12306.activities.query;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -17,7 +16,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.cr12306.MainActivity;
 import com.example.cr12306.R;
 
 import java.io.BufferedReader;
@@ -67,12 +65,7 @@ public class TrainEquipmentActivity extends AppCompatActivity {
         });
 
         back3 = findViewById(R.id.back3);
-        back3.setOnClickListener(view -> {
-            Intent i = new Intent(TrainEquipmentActivity.this, MainActivity.class);
-            startActivity(i);
-            TrainEquipmentActivity.this.finish();
-        });
-
+        back3.setOnClickListener(view -> TrainEquipmentActivity.this.finish());
 
     }
 
