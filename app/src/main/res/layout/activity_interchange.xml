@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:background="@color/teal_200">
+
+        <ImageButton
+            android:id="@+id/back_trans"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/back"
+            android:scaleType="fitXY"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="中转查询"
+            android:textSize="25dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+        <LinearLayout
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/trans_start_station"
+                android:text="出发站"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/black"/>
+            <TextView
+                android:id="@+id/trans_txt_start_station"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:layout_height="50dp"
+                android:text="北京"
+                android:textSize="30dp"
+                android:singleLine="true"/>
+
+        </LinearLayout>
+
+        <!-- 有个图标 -->
+        <ImageButton
+            android:id="@+id/trans_change"
+            android:src="@drawable/btn_change_selector"
+            android:scaleType="fitEnd"
+            android:layout_width="100dp"
+            android:layout_height="100dp"/>
+
+        <LinearLayout
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/trans_end_station"
+                android:text="目的地"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/black"/>
+            <TextView
+                android:id="@+id/trans_txt_end_station"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:text="广州"
+                android:layout_gravity="center"
+                android:textSize="30dp"
+                android:singleLine="true"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <!-- 选择日期行 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="乘坐日期："
+            android:textSize="25dp"/>
+        <Button
+            android:id="@+id/trans_choose_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="选择"
+            android:onClick="setDate"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_query_trans"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="查询"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:ellipsize="marquee"
+        android:text="注：此界面换乘车辆信息仅供参考，请根据自身实际情况选择自行购买"/>
+</LinearLayout>

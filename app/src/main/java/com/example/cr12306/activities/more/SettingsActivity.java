@@ -19,10 +19,9 @@ import com.example.cr12306.activities.crlines.LinesActivity;
 public class SettingsActivity extends AppCompatActivity implements View.OnClickListener {
 
     public ImageButton back_setting;
-    public Button btn_login, btn_about, btn_news, btn_lines;
+    public Button btn_login, btn_about, btn_news, btn_lines, btn_trans;
 
     public Intent intent_settings = new Intent();
-    public Intent intent_fromLogin = getIntent();
 
     public int resultCode;
 
@@ -54,12 +53,14 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         btn_login = findViewById(R.id.btn_login);
         btn_news = findViewById(R.id.btn_news);
         btn_lines = findViewById(R.id.btn_lines);
+        btn_trans = findViewById(R.id.btn_trans);
 
         back_setting.setOnClickListener(this);
         btn_login.setOnClickListener(this);
         btn_about.setOnClickListener(this);
         btn_news.setOnClickListener(this);
         btn_lines.setOnClickListener(this);
+        btn_trans.setOnClickListener(this);
     }
 
     /**
@@ -85,6 +86,10 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                 intent_settings.setClass(this, LinesActivity.class);
                 startActivity(intent_settings);
                 this.finish();
+            }
+            case R.id.btn_trans -> {
+                intent_settings.setClass(this, TransActivity.class);
+                startActivity(intent_settings);
             }
         }
     }

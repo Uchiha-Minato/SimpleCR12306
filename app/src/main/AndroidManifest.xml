@@ -40,6 +40,8 @@
         <activity android:name=".activities.crlines.LinesActivity"/>
         <activity android:name=".activities.tickets.ConfirmOrderActivity"/>
         <activity android:name=".activities.tickets.ChooseStationActivity"/>
+        <activity android:name=".activities.more.TransActivity"/>
+        <activity android:name=".activities.more.TransDetailActivity"/>
     </application>
 
 
