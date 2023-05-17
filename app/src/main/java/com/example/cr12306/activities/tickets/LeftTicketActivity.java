@@ -351,7 +351,7 @@ public class LeftTicketActivity extends AppCompatActivity {
                 //处理JSON字符串
                 tickets = parseLeftTicketJSONData(data);
                 //判断是否筛选只看高铁动车
-                if(getIntent().getStringExtra("filtration").equals("只看高铁动车")) {
+                if((getIntent().getStringExtra("filtration")) != null && getIntent().getStringExtra("filtration").equals("只看高铁动车")) {
                     tickets = filtrateZTK(tickets);
                     Toast.makeText(LeftTicketActivity.this, "筛选：只看高铁动车", Toast.LENGTH_SHORT).show();
                 }
