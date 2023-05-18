@@ -93,16 +93,17 @@ public class TransActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        assert data != null;
-        Station station = (Station) data.getSerializableExtra("station");
-        switch (requestCode) {
-            case 0 -> {
-                txt_start_station.setText(station.getStation_name());
-                start_station = station;
-            }
-            case 1 -> {
-                txt_end_station.setText(station.getStation_name());
-                end_station = station;
+        if(resultCode == 3 || resultCode == 4) {
+            Station station = (Station) data.getSerializableExtra("station");
+            switch (resultCode) {
+                case 3 -> {
+                    txt_start_station.setText(station.getStation_name());
+                    start_station = station;
+                }
+                case 4 -> {
+                    txt_end_station.setText(station.getStation_name());
+                    end_station = station;
+                }
             }
         }
     }
@@ -133,13 +134,13 @@ public class TransActivity extends AppCompatActivity implements View.OnClickList
         switch (v.getId()) {
             case R.id.trans_start_station -> {
                 intent.setClass(this, ChooseStationActivity.class);
-                requestCode = 0;
+                requestCode = 3;
                 intent.putExtra("requestCode", requestCode);
                 startActivityForResult(intent, requestCode);
             }
             case R.id.trans_end_station -> {
                 intent.setClass(this, ChooseStationActivity.class);
-                requestCode = 1;
+                requestCode = 4;
                 intent.putExtra("requestCode", requestCode);
                 startActivityForResult(intent, requestCode);
             }

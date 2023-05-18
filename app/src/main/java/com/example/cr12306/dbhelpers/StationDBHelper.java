@@ -3,6 +3,10 @@ package com.example.cr12306.dbhelpers;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+import android.widget.Toast;
+
+import com.example.cr12306.utils.MyApplication;
 
 public class StationDBHelper extends SQLiteOpenHelper {
 
@@ -24,11 +28,13 @@ public class StationDBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(createTable_station);
+        Toast.makeText(MyApplication.getContext(), "车站数据库创建成功", Toast.LENGTH_SHORT).show();
+        Log.i("db", "数据库创建成功");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL(drop_table_station);
-        db.execSQL(createTable_station);
+        onCreate(db);
     }
 }

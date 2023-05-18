@@ -3,6 +3,7 @@ package com.example.cr12306.activities.tickets;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -25,7 +26,7 @@ import java.util.ArrayList;
 
 public class ChooseStationActivity extends AppCompatActivity implements View.OnClickListener{
 
-    private final ChooseStationDBUtils util = new ChooseStationDBUtils(this);
+    public ChooseStationDBUtils util;
     public Intent intent_fromMain;
     private int requestCode;
 
@@ -43,15 +44,34 @@ public class ChooseStationActivity extends AppCompatActivity implements View.OnC
         this.supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_station);
+
+        //直接初始化数据库
+        util = new ChooseStationDBUtils(this);
+
         intent_fromMain = getIntent();
         requestCode = getIntent().getIntExtra("requestCode", 0);
+        Log.i("Storage", String.valueOf(getExternalFilesDir(null)));
 
-    /*  Button button = findViewById(R.id.test1);
+        Button button = findViewById(R.id.btn_create_db);
+        if(util.dataExists()) {
+            button.setVisibility(View.GONE);
+        }
         button.setOnClickListener(v -> {
             //util.createExternalStoragePrivateFile();
-            util.initStations();
-        });*/
+            if(util.fileExists()) {
+                util.initStations();
+            } else {
+                Toast.makeText(this, "车站文件不存在！", Toast.LENGTH_SHORT).show();
+            }
+        });
         initView();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        setResult(2);
+        finish();
     }
 
     private void initView() {

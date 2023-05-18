@@ -5,11 +5,13 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Environment;
+import android.os.FileUtils;
 import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.example.cr12306.R;
 import com.example.cr12306.dbhelpers.StationDBHelper;
 import com.example.cr12306.domain.Station;
 
@@ -18,13 +20,16 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
 public class ChooseStationDBUtils {
@@ -63,7 +68,29 @@ public class ChooseStationDBUtils {
         return stations;
     }
 
+    /**
+     * 判断表内数据是否存在 第二次启动后用于隐藏按钮
+     * */
+    public Boolean dataExists() {
+        database = dbHelper.getReadableDatabase();
+        String sql_queryAll = "select * from station";
+        @SuppressLint("Recycle") Cursor cursor = database.rawQuery(sql_queryAll, new String[]{});
+        return cursor.moveToNext();
+    }
 
+    /**
+     * 判断车站文件是否存在
+     * */
+    public Boolean fileExists() {
+        try {
+            File file = new File(PATH,"/Android/data/com.example.cr12306/files/station_names1.json");
+            if(!file.exists())
+                return false;
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
 
     /**
      * 初始化时用，只用一次
@@ -109,18 +136,18 @@ public class ChooseStationDBUtils {
                 String name = stationArrayList.get(i).getStation_name();
                 String telecode = stationArrayList.get(i).getTelecode();
                 database.execSQL(insert_sql, new String[]{name, telecode});
-                Toast.makeText(context, "数据添加成功", Toast.LENGTH_SHORT).show();
             }
+            Toast.makeText(context, "数据添加成功", Toast.LENGTH_SHORT).show();
 
         } catch (IOException | JSONException e) {
             throw new RuntimeException(e);
         }
     }
     public void createExternalStoragePrivateFile() {
-        File file = new File(context.getExternalFilesDir(null), "app/libs/station_names1.json");
+        File file = new File(context.getExternalFilesDir(null), "station_names1.json");
         try{
             Log.i("Storage", String.valueOf(context.getExternalFilesDir(null)));
-            InputStream is = new FileInputStream("app/libs/station_names1.json");
+            InputStream is = new FileInputStream(file);
             OutputStream os = new FileOutputStream(file);
             byte[] data = new byte[is.available()];
             int result = is.read(data);

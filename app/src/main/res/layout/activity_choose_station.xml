@@ -118,12 +118,25 @@
         </TableRow>
     </TableLayout>
 
-    <TextView
+    <Button
+        android:id="@+id/btn_create_db"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="搜索结果"
-        android:textSize="25dp"
-        android:textStyle="bold"/>
+        android:textSize="20dp"
+        android:text="点击初始化本地数据库"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="搜索结果"
+            android:textSize="25dp"
+            android:textStyle="bold"/>
+
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView_query_station"
