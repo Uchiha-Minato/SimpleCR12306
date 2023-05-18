@@ -239,24 +239,27 @@ public class ConfirmOrderActivity extends AppCompatActivity {
     private String seatHasChecked() {
         String seat = "";
 
-        if(seat_A_ZY.isChecked())
-            seat = seat_A_ZY.getText().toString();
-        else if(seat_C_ZY.isChecked())
-            seat = seat_C_ZY.getText().toString();
-        else if(seat_D_ZY.isChecked())
-            seat = seat_D_ZY.getText().toString();
-        else if(seat_F_ZY.isChecked())
-            seat = seat_F_ZY.getText().toString();
-        else if(seat_A_ZE.isChecked())
-            seat = seat_A_ZE.getText().toString();
-        else if(seat_B_ZE.isChecked())
-            seat = seat_B_ZE.getText().toString();
-        else if(seat_C_ZE.isChecked())
-            seat = seat_C_ZE.getText().toString();
-        else if(seat_D_ZE.isChecked())
-            seat = seat_D_ZE.getText().toString();
-        else if(seat_F_ZE.isChecked())
-            seat = seat_F_ZE.getText().toString();
+        if(choose_seat_ZY.getVisibility() == View.VISIBLE) {
+            if(seat_A_ZY.isChecked())
+                seat = seat_A_ZY.getText().toString();
+            else if(seat_C_ZY.isChecked())
+                seat = seat_C_ZY.getText().toString();
+            else if(seat_D_ZY.isChecked())
+                seat = seat_D_ZY.getText().toString();
+            else if(seat_F_ZY.isChecked())
+                seat = seat_F_ZY.getText().toString();
+        } else if(choose_seat_ZE.getVisibility() == View.VISIBLE) {
+            if(seat_A_ZE.isChecked())
+                seat = seat_A_ZE.getText().toString();
+            else if(seat_B_ZE.isChecked())
+                seat = seat_B_ZE.getText().toString();
+            else if(seat_C_ZE.isChecked())
+                seat = seat_C_ZE.getText().toString();
+            else if(seat_D_ZE.isChecked())
+                seat = seat_D_ZE.getText().toString();
+            else if(seat_F_ZE.isChecked())
+                seat = seat_F_ZE.getText().toString();
+        }
 
         return seat;
     }
