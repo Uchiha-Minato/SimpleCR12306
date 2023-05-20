@@ -20,6 +20,15 @@ public class CRLineDBUtils {
         helper = new CRLinesDBHelper(context);
     }
 
+    /**
+     * 判断数据库中是否有数据存在
+     * */
+    public Boolean dataExists() {
+        database = helper.getReadableDatabase();
+        String query_sql = "select * from crlines";
+        @SuppressLint("Recycle") Cursor cursor = database.rawQuery(query_sql, null);
+        return cursor.moveToNext();
+    }
 
     /**
      * 添加线路类型进入数据库

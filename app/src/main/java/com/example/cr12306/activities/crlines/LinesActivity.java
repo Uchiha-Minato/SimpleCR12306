@@ -5,12 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,7 +35,7 @@ public class LinesActivity extends AppCompatActivity implements View.OnClickList
     public static final String CRH = "高速线/客运专线";
 
     public Intent intent_lines_main = new Intent();
-    private final CRLineDBUtils util = new CRLineDBUtils(this);
+    private final CRLineDBUtils util_cr = new CRLineDBUtils(this);
 
     //一级页面按钮和布局
     public LinearLayout lines_main;
@@ -62,8 +59,10 @@ public class LinesActivity extends AppCompatActivity implements View.OnClickList
         this.supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lines);
-        // 只能用一次
-        // util.addEnumIntoDB();
+
+        if(!util_cr.dataExists()) {
+            util_cr.addEnumIntoDB();
+        }
 
         initViews();
     }
@@ -133,7 +132,7 @@ public class LinesActivity extends AppCompatActivity implements View.OnClickList
      * 初始化ListView控件
      * */
     private void initRecyclerView_CR() {
-        ArrayList<String> list = util.getAllLines();
+        ArrayList<String> list = util_cr.getAllLines();
 /*        CRLines[] allLines = CRLines.values();
         int row = allLines.length;
         if(row != 0) {
@@ -175,7 +174,7 @@ public class LinesActivity extends AppCompatActivity implements View.OnClickList
      **/
     private void initDistanceRecyclerView(String line_name) {
         //1.新建链表//2.从数据库取数据加入链表
-        ArrayList<DistanceDetail> details = util.getStationsByLine(line_name);
+        ArrayList<DistanceDetail> details = util_cr.getStationsByLine(line_name);
         //3.显示
         DistanceAdapter adapter = new DistanceAdapter(details);
         recyclerView_details.setLayoutManager(new LinearLayoutManager(this));
