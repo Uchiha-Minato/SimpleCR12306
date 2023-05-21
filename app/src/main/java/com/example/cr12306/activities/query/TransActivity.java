@@ -1,4 +1,4 @@
-package com.example.cr12306.activities.more;
+package com.example.cr12306.activities.query;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
@@ -16,7 +16,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cr12306.R;
 import com.example.cr12306.activities.tickets.ChooseStationActivity;
-import com.example.cr12306.activities.tickets.LeftTicketActivity;
 import com.example.cr12306.domain.Station;
 
 import java.util.Calendar;
@@ -33,6 +32,7 @@ public class TransActivity extends AppCompatActivity implements View.OnClickList
 
     public Station start_station = new Station();
     public Station end_station = new Station();
+    public String train_date;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -46,6 +46,14 @@ public class TransActivity extends AppCompatActivity implements View.OnClickList
         start_station.setTelecode("BJP");
         end_station.setStation_name("广州");
         end_station.setTelecode("GZQ");
+
+        if(getIntent().getSerializableExtra("bundle_start_station") != null
+                && getIntent().getSerializableExtra("bundle_end_station") != null
+                && getIntent().getStringExtra("date") != null) {
+            start_station = (Station) getIntent().getSerializableExtra("bundle_start_station");
+            end_station = (Station) getIntent().getSerializableExtra("bundle_end_station");
+            train_date = getIntent().getStringExtra("date");
+        }
 
         initView();
 
@@ -113,9 +121,15 @@ public class TransActivity extends AppCompatActivity implements View.OnClickList
         back_trans.setOnClickListener(v -> finish());
         btn_start_station = findViewById(R.id.trans_start_station);
         txt_start_station = findViewById(R.id.trans_txt_start_station);
+        txt_start_station.setText(start_station.getStation_name());
+
         btn_end_station = findViewById(R.id.trans_end_station);
         txt_end_station = findViewById(R.id.trans_txt_end_station);
+        txt_end_station.setText(end_station.getStation_name());
+
         choose_date = findViewById(R.id.trans_choose_date);
+        if(train_date != null)
+            choose_date.setText(train_date);
         query = findViewById(R.id.btn_query_trans);
         change = findViewById(R.id.trans_change);
 

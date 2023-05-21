@@ -18,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cr12306.activities.more.SettingsActivity;
+import com.example.cr12306.activities.query.TransActivity;
 import com.example.cr12306.activities.query.TrainEquipmentActivity;
 import com.example.cr12306.activities.query.TrainQueryActivity;
 import com.example.cr12306.activities.tickets.ChooseStationActivity;
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public Calendar calendar;
     public int year, month, day;
 
-    public Button btn_start_station, btn_end_station, btn_query, choose_date;
+    public Button btn_start_station, btn_end_station, btn_query, choose_date, btn_toTrans;
     public TextView txt_start_station, txt_end_station;
     public ImageButton btn_change;
 
@@ -137,6 +138,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn_change = findViewById(R.id.change);
         btn_start_station = findViewById(R.id.btn_start_station);
         btn_end_station = findViewById(R.id.btn_end_station);
+        btn_toTrans = findViewById(R.id.btn_trans);
 
         checkBox_common = findViewById(R.id.checkbox_common);
         checkBox_student = findViewById(R.id.checkbox_student);
@@ -150,6 +152,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn_change.setOnClickListener(this);
         btn_start_station.setOnClickListener(this);
         btn_end_station.setOnClickListener(this);
+        btn_toTrans.setOnClickListener(this);
     }
 
     public Intent intent = new Intent();
@@ -213,6 +216,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 requestCode = 4;
                 intent.putExtra("requestCode", requestCode);
                 startActivityForResult(intent, requestCode);
+            }
+            case R.id.btn_trans -> {
+                intent.setClass(MainActivity.this, TransActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("bundle_start_station", start_station);
+                bundle.putSerializable("bundle_end_station", end_station);
+                intent.putExtras(bundle);
+                if(!choose_date.getText().toString().equals("选择"))
+                    intent.putExtra("date", choose_date.getText().toString());
+                startActivity(intent);
             }
         }
     }

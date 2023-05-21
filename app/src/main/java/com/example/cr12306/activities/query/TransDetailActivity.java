@@ -1,4 +1,4 @@
-package com.example.cr12306.activities.more;
+package com.example.cr12306.activities.query;
 
 import android.annotation.SuppressLint;
 import android.content.ClipData;
