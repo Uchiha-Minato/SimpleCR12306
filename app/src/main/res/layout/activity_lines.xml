@@ -76,7 +76,11 @@
             layout="@layout/cr_details"
             android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@id/line_top" />
-
+        <include
+            android:id="@+id/include_corridor"
+            layout="@layout/crh_details"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/line_top"/>
     </LinearLayout>
 
 

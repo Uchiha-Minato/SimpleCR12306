@@ -17,9 +17,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cr12306.R;
 import com.example.cr12306.activities.more.SettingsActivity;
+import com.example.cr12306.adapter.CRHLinesAdapter;
 import com.example.cr12306.adapter.CRLinesAdapter;
+import com.example.cr12306.adapter.CorridorAdapter;
 import com.example.cr12306.adapter.DistanceAdapter;
+import com.example.cr12306.domain.CorridorDetail;
 import com.example.cr12306.domain.DistanceDetail;
+import com.example.cr12306.utils.CRHLineDBUtils;
 import com.example.cr12306.utils.CRLineDBUtils;
 
 import java.util.ArrayList;
@@ -36,6 +40,7 @@ public class LinesActivity extends AppCompatActivity implements View.OnClickList
 
     public Intent intent_lines_main = new Intent();
     private final CRLineDBUtils util_cr = new CRLineDBUtils(this);
+    private final CRHLineDBUtils util_crh = new CRHLineDBUtils(this);
 
     //一级页面按钮和布局
     public LinearLayout lines_main;
@@ -49,9 +54,9 @@ public class LinesActivity extends AppCompatActivity implements View.OnClickList
     public RecyclerView recyclerView_Lines;
 
     //三级页面按钮和布局
-    public LinearLayout cr_distance;
-    public ImageButton back_distance_detail;
-    public RecyclerView recyclerView_details;
+    public LinearLayout cr_distance, crh_corridor;
+    public ImageButton back_distance_detail, back_corridor_detail;
+    public RecyclerView recyclerView_details, recyclerView_corridor;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -62,6 +67,9 @@ public class LinesActivity extends AppCompatActivity implements View.OnClickList
 
         if(!util_cr.dataExists()) {
             util_cr.addEnumIntoDB();
+        }
+        if(!util_crh.dataExists()) {
+            util_crh.addEnumIntoDB();
         }
 
         initViews();
@@ -82,12 +90,16 @@ public class LinesActivity extends AppCompatActivity implements View.OnClickList
         cr_distance = findViewById(R.id.include_distance);
         back_distance_detail = findViewById(R.id.back_distance_detail);
         recyclerView_details = findViewById(R.id.RecyclerView_distance);
+        crh_corridor = findViewById(R.id.include_corridor);
+        back_corridor_detail = findViewById(R.id.back_corridor_detail);
+        recyclerView_corridor = findViewById(R.id.RecyclerView_corridor);
 
         back_lines.setOnClickListener(this);
         btn_china_rail.setOnClickListener(this);
         btn_cr_highSpeed.setOnClickListener(this);
         back_lines_details.setOnClickListener(this);
         back_distance_detail.setOnClickListener(this);
+        back_corridor_detail.setOnClickListener(this);
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -110,7 +122,7 @@ public class LinesActivity extends AppCompatActivity implements View.OnClickList
                 lines_main.setVisibility(View.GONE);
                 title.setText(CRH);
                 cr_list.setVisibility(View.VISIBLE);
-
+                initRecyclerView_CRH();
             }
             //二级页面
             case R.id.back_lines_details -> {
@@ -123,6 +135,11 @@ public class LinesActivity extends AppCompatActivity implements View.OnClickList
             case R.id.back_distance_detail -> {
                 cr_distance.setVisibility(View.GONE);
                 title.setText(CR);//此处需要更改
+                cr_list.setVisibility(View.VISIBLE);
+            }
+            case R.id.back_corridor_detail -> {
+                crh_corridor.setVisibility(View.GONE);
+                title.setText(CRH);
                 cr_list.setVisibility(View.VISIBLE);
             }
         }
@@ -158,15 +175,27 @@ public class LinesActivity extends AppCompatActivity implements View.OnClickList
         });
     }
     private void initRecyclerView_CRH() {
-        CRHLines[] allLines = CRHLines.values();
-        int row = allLines.length;
-        ArrayList<String> list = new ArrayList<>();
-        if(row != 0) {
-            for (CRHLines lines: allLines) {
-                list.add(String.valueOf(lines));
-            }
-        }
+        ArrayList<String> corridors = util_crh.getAllCorridors();
+        recyclerView_Lines.setLayoutManager(new LinearLayoutManager(this));
+        CRHLinesAdapter adapter = new CRHLinesAdapter(corridors);
+        recyclerView_Lines.setAdapter(adapter);
+        adapter.setClickListener(((view, position) -> {
+            cr_list.setVisibility(View.GONE);
+            crh_corridor.setVisibility(View.VISIBLE);
+            String corridor = corridors.get(position);
+            title.setText(corridor);
+            Toast.makeText(this, "你点击了"+corridor, Toast.LENGTH_SHORT).show();
+            initCorridorRecyclerView(corridor);
+        }));
 
+    }
+    /**
+     * 三级页面RecyclerView设置
+     * */
+    private void initCorridorRecyclerView(String corridor) {
+        ArrayList<CorridorDetail> details = util_crh.getStationsByCorridor(corridor);
+        CorridorAdapter adapter = new CorridorAdapter(details);
+        recyclerView_corridor.setAdapter(adapter);
     }
 
     /**
