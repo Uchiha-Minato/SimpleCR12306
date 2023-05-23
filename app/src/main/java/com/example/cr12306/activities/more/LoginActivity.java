@@ -2,6 +2,7 @@ package com.example.cr12306.activities.more;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -18,15 +19,24 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.cr12306.R;
 import com.example.cr12306.utils.UserDBUtils;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     public UserDBUtils utils = new UserDBUtils(this);
     public Intent intent_login = new Intent();
 
     public EditText username, password;
-    public Button sign_in, sign_up;
+    public Button sign_in, sign_up, sign_out;
     public TextView forget_password;
     public ImageButton back_login;
+
+    private static final String fileName = "config";
+    private static final String key_UserName = "UserName";//用户名
+    private static final String key_LoginDate = "LoginDate";
+    public SharedPreferences preferences;
+    public SharedPreferences.Editor editor;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -34,6 +44,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         this.supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        preferences = getSharedPreferences(fileName, MODE_PRIVATE);
+        editor = preferences.edit();
 
         initViews();
     }
@@ -45,10 +58,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         sign_in = findViewById(R.id.sign_in);
         sign_up = findViewById(R.id.sign_up);
         back_login = findViewById(R.id.back_login);
+        sign_out = findViewById(R.id.sign_out);
 
         sign_in.setOnClickListener(this);
         sign_up.setOnClickListener(this);
         back_login.setOnClickListener(this);
+        sign_out.setOnClickListener(this);
         //forget_password.setOnClickListener(this);
     }
 
@@ -64,6 +79,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 String result = utils.querySingleUser(uname, pwd);
                 if (result != null){
                     Toast.makeText(this, "欢迎你，" + result, Toast.LENGTH_SHORT).show();
+
+                    //把登陆信息添加进SharedPreference
+                    @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                    String strLoginDate = simpleDateFormat.format(new Date());
+                    editor.putString(key_LoginDate, strLoginDate);
+                    editor.putString(key_UserName, result);
+                    editor.apply();
+
                     intent_login.setClass(LoginActivity.this, SettingsActivity.class);
                     intent_login.putExtra("username", result);
                     int requestCode = 1;
@@ -85,6 +108,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 int requestCode = 0;
                 setResult(requestCode);
                 LoginActivity.this.finish();
+            }
+            case R.id.sign_out -> {
+                String username = preferences.getString(key_UserName, null);
+                if(username == null)
+                    Toast.makeText(this, "你还未登录", Toast.LENGTH_SHORT).show();
+                else {
+                    editor.clear();
+                    editor.commit();
+                    int resultCode = 3;
+                    setResult(resultCode);
+                    finish();
+                    Toast.makeText(this, "退出登录成功", Toast.LENGTH_SHORT).show();
+                }
             }
         }
     }

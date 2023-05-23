@@ -5,6 +5,7 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -20,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cr12306.MainActivity;
 import com.example.cr12306.R;
+import com.example.cr12306.activities.more.LoginActivity;
 import com.example.cr12306.domain.BuyTicket;
 
 import java.util.Objects;
@@ -36,11 +38,17 @@ public class ConfirmOrderActivity extends AppCompatActivity {
     public CheckBox seat_A_ZY, seat_C_ZY, seat_D_ZY, seat_F_ZY;
     public Button btn_confirm;
 
+    private static final String fileName = "config";
+    private static final String key_UserName = "UserName";
+    public SharedPreferences preferences;
+    public String username;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         this.supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm);
+        preferences = getSharedPreferences(fileName, MODE_PRIVATE);
 
         if(getIntent().getSerializableExtra("confirm") != null) {
             buyTicket = (BuyTicket) getIntent().getSerializableExtra("confirm");
@@ -78,63 +86,83 @@ public class ConfirmOrderActivity extends AppCompatActivity {
         seat_F_ZY = findViewById(R.id.seat_f_ZY);
         btn_confirm = findViewById(R.id.btn_confirm);
         btn_confirm.setOnClickListener(v -> {
-            if(choose_seat_ZY.getVisibility() == View.VISIBLE) {
-                if(!seat_A_ZY.isChecked() && !seat_C_ZY.isChecked()
-                        && !seat_D_ZY.isChecked() && !seat_F_ZY.isChecked()) {
-                    Toast.makeText(this, "请选择一个偏好座位", Toast.LENGTH_SHORT).show();
-                } else {
-                    AlertDialog.Builder dialog = new AlertDialog.Builder(ConfirmOrderActivity.this);
-                    dialog.setIcon(R.drawable.about);
-                    dialog.setTitle("已经提交的信息");
-                    String message = buyTicket.getStation_train_code()+"次\n"
-                            + buyTicket.getFrom_station_name() + "-" + buyTicket.getTo_station_name()
-                            + "\n" + buyTicket.getDate() + "\nZY(一等座) " + seatHasChecked();
-                    dialog.setMessage(message);
-                    dialog.setPositiveButton("好", (dialog1, which) -> {
-                        copyToClipboard(message);
-                        Intent intent = new Intent(this, MainActivity.class);
-                        startActivity(intent);
-                        finish();
-                    });
-                    dialog.show();
-                }
-            } else if(choose_seat_ZE.getVisibility() == View.VISIBLE) {
-                if(!seat_A_ZE.isChecked() && !seat_B_ZE.isChecked() && !seat_C_ZE.isChecked()
-                        && !seat_D_ZE.isChecked() && !seat_F_ZE.isChecked()) {
-                    Toast.makeText(this, "请选择一个偏好座位", Toast.LENGTH_SHORT).show();
-                } else {
-                    AlertDialog.Builder dialog = new AlertDialog.Builder(ConfirmOrderActivity.this);
-                    dialog.setIcon(R.drawable.about);
-                    dialog.setTitle("已经提交的信息");
-                    String message = buyTicket.getStation_train_code()+"次\n"
-                            + buyTicket.getFrom_station_name() + "-" + buyTicket.getTo_station_name()
-                            + "\n" + buyTicket.getDate() + "\nZE(二等座) " + seatHasChecked();
-                    dialog.setMessage(message);
-                    dialog.setPositiveButton("好", (dialog1, which) -> {
-                        copyToClipboard(message);
-                        Intent intent = new Intent(this, MainActivity.class);
-                        startActivity(intent);
-                        finish();
-                    });
-                    dialog.show();
-                }
+            username = preferences.getString(key_UserName, null);
+            if(username == null) {
+                Toast.makeText(this, "请先登录", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(this, LoginActivity.class);
+                int requestCode = 1;
+                startActivityForResult(intent, requestCode);
             } else {
-                AlertDialog.Builder dialog = new AlertDialog.Builder(ConfirmOrderActivity.this);
-                dialog.setIcon(R.drawable.about);
-                dialog.setTitle("已经提交的信息");
-                String message = buyTicket.getStation_train_code()+"次\n"
-                        + buyTicket.getFrom_station_name() + "-" + buyTicket.getTo_station_name()
-                        + "\n" + buyTicket.getDate() + "\n" + buyTicket.getSeat_type();
-                dialog.setMessage(message);
-                dialog.setPositiveButton("好", (dialog1, which) -> {
-                    copyToClipboard(message);
-                    Intent intent = new Intent(this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
-                });
-                dialog.show();
+                if(choose_seat_ZY.getVisibility() == View.VISIBLE) {
+                    if(!seat_A_ZY.isChecked() && !seat_C_ZY.isChecked()
+                            && !seat_D_ZY.isChecked() && !seat_F_ZY.isChecked()) {
+                        Toast.makeText(this, "请选择一个偏好座位", Toast.LENGTH_SHORT).show();
+                    } else {
+                        AlertDialog.Builder dialog = new AlertDialog.Builder(ConfirmOrderActivity.this);
+                        dialog.setIcon(R.drawable.about);
+                        dialog.setTitle("已经提交的信息");
+                        String message = "已登录用户名：" + username + "\n"
+                                + buyTicket.getStation_train_code()+"次\n"
+                                + buyTicket.getFrom_station_name() + "-" + buyTicket.getTo_station_name()
+                                + "\n" + buyTicket.getDate() + "\nZY(一等座) " + seatHasChecked();
+                        dialog.setMessage(message);
+                        dialog.setPositiveButton("好", (dialog1, which) -> {
+                            copyToClipboard(message);
+                            Intent intent = new Intent(this, MainActivity.class);
+                            startActivity(intent);
+                            finish();
+                        });
+                        dialog.show();
+                    }
+                } else if(choose_seat_ZE.getVisibility() == View.VISIBLE) {
+                    if(!seat_A_ZE.isChecked() && !seat_B_ZE.isChecked() && !seat_C_ZE.isChecked()
+                            && !seat_D_ZE.isChecked() && !seat_F_ZE.isChecked()) {
+                        Toast.makeText(this, "请选择一个偏好座位", Toast.LENGTH_SHORT).show();
+                    } else {
+                        AlertDialog.Builder dialog = new AlertDialog.Builder(ConfirmOrderActivity.this);
+                        dialog.setIcon(R.drawable.about);
+                        dialog.setTitle("已经提交的信息");
+                        String message = "已登录用户名：" + username + "\n"
+                                + buyTicket.getStation_train_code()+"次\n"
+                                + buyTicket.getFrom_station_name() + "-" + buyTicket.getTo_station_name()
+                                + "\n" + buyTicket.getDate() + "\nZE(二等座) " + seatHasChecked();
+                        dialog.setMessage(message);
+                        dialog.setPositiveButton("好", (dialog1, which) -> {
+                            copyToClipboard(message);
+                            Intent intent = new Intent(this, MainActivity.class);
+                            startActivity(intent);
+                            finish();
+                        });
+                        dialog.show();
+                    }
+                } else {
+                    AlertDialog.Builder dialog = new AlertDialog.Builder(ConfirmOrderActivity.this);
+                    dialog.setIcon(R.drawable.about);
+                    dialog.setTitle("已经提交的信息");
+                    String message = "已登录用户名：" + username + "\n"
+                            + buyTicket.getStation_train_code()+"次\n"
+                            + buyTicket.getFrom_station_name() + "-" + buyTicket.getTo_station_name()
+                            + "\n" + buyTicket.getDate() + "\n" + buyTicket.getSeat_type();
+                    dialog.setMessage(message);
+                    dialog.setPositiveButton("好", (dialog1, which) -> {
+                        copyToClipboard(message);
+                        Intent intent = new Intent(this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    });
+                    dialog.show();
+                }
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        //登陆成功
+        if(resultCode == 1) {
+            username = preferences.getString(key_UserName, null);
+        }
     }
 
     @SuppressLint("SetTextI18n")

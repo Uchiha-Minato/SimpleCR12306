@@ -2,6 +2,7 @@ package com.example.cr12306.activities.more;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -21,8 +22,11 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
     public Button btn_login, btn_about, btn_news, btn_lines;//btn_trans;
 
     public Intent intent_settings = new Intent();
-
     public int resultCode;
+
+    private static final String fileName = "config";
+    private static final String key_UserName = "UserName";
+    public SharedPreferences preferences;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -30,6 +34,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         this.supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+        preferences = getSharedPreferences(fileName, MODE_PRIVATE);
 
         initViews();
     }
@@ -40,6 +45,8 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         //更新界面：登陆成功
         if(resultCode == 1) {
             btn_login.setText(data.getStringExtra("username"));
+        } else if(resultCode == 3) {
+            btn_login.setText("登录/注册");
         }
     }
 
@@ -50,6 +57,11 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         back_setting = findViewById(R.id.back_setting);
         btn_about = findViewById(R.id.btn_about);
         btn_login = findViewById(R.id.btn_login);
+        //第二种获得登录信息的方式: SharedPreference
+        String username = preferences.getString(key_UserName, null);
+        if(username != null)
+            btn_login.setText(username);
+
         btn_news = findViewById(R.id.btn_news);
         btn_lines = findViewById(R.id.btn_lines);
         //btn_trans = findViewById(R.id.btn_trans);
