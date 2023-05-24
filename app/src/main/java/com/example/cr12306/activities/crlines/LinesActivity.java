@@ -195,6 +195,7 @@ public class LinesActivity extends AppCompatActivity implements View.OnClickList
     private void initCorridorRecyclerView(String corridor) {
         ArrayList<CorridorDetail> details = util_crh.getStationsByCorridor(corridor);
         CorridorAdapter adapter = new CorridorAdapter(details);
+        recyclerView_corridor.setLayoutManager(new LinearLayoutManager(this));
         recyclerView_corridor.setAdapter(adapter);
     }
 

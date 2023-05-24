@@ -33,6 +33,7 @@
 
         <EditText
             android:id="@+id/edit_trainCode"
+            android:hint="请输入要查询的车次"
             android:layout_width="250dp"
             android:layout_height="50dp"
             android:textSize="20dp"/>
