@@ -168,7 +168,6 @@ public class TransDetailActivity extends AppCompatActivity {
             JSONObject object = new JSONObject(jsonStr);
             //第二层
             JSONObject object1 = object.optJSONObject("data");
-            assert object1 != null;
             //第三层数组
             JSONArray array = object1.optJSONArray("middleList");
             assert array != null;
@@ -217,8 +216,8 @@ public class TransDetailActivity extends AppCompatActivity {
                 interchanges.add(interchange);
             }
 
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+        } catch (JSONException|NullPointerException e) {
+            parseErrorMSG(jsonStr);
         }
 
         return interchanges;
@@ -231,8 +230,12 @@ public class TransDetailActivity extends AppCompatActivity {
 
             if(msg.what == 0) {
                 String data = msg.obj.toString();
-                plans = parseInterchangeJSONData(data);
-                initRecyclerView(plans);
+                try {
+                    plans = parseInterchangeJSONData(data);
+                    initRecyclerView(plans);
+                } catch (Exception e) {
+                    parseErrorMSG(data);
+                }
             }
         }
     };
@@ -282,6 +285,19 @@ public class TransDetailActivity extends AppCompatActivity {
             Toast.makeText(this, "已经复制到剪贴板", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * 如果没有数据，就调用这个方法
+     * */
+    private void parseErrorMSG(String errorMsg) {
+        try {
+            JSONObject object = new JSONObject(errorMsg);
+            String msg = object.optString("errorMsg");
+            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
         }
     }
 }

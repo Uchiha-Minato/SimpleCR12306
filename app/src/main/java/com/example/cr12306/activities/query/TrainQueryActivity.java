@@ -233,22 +233,28 @@ public class TrainQueryActivity extends AppCompatActivity implements View.OnClic
                 //测试
                 //test.setText(data);
                 leftTicketDTO_train_no = parseTrainNoJSONData(data);
+                if(leftTicketDTO_train_no == null) {
+                    Toast.makeText(TrainQueryActivity.this, "日期或车次错误", Toast.LENGTH_SHORT).show();
+                    trainQuery_main.setVisibility(View.VISIBLE);
+                    trainQuery_result.setVisibility(View.GONE);
+                } else {
 
                 //再用GET 时刻表查询得到最终结果
-                String date = choose_date.getText().toString();
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        String timeTableResult = queryTrainInfo(leftTicketDTO_train_no, date);
-                        Message msg1 = new Message();
-                        msg1.what = 1;
-                        msg1.obj = timeTableResult;
+                    String date = choose_date.getText().toString();
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            String timeTableResult = queryTrainInfo(leftTicketDTO_train_no, date);
+                            Message msg1 = new Message();
+                            msg1.what = 1;
+                            msg1.obj = timeTableResult;
 
-                        handler1.sendMessage(msg1);
-                    }
-                }).start();
+                            handler1.sendMessage(msg1);
+                        }
+                    }).start();
 
-                Toast.makeText(TrainQueryActivity.this, "主线程收到消息", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TrainQueryActivity.this, "主线程收到消息", Toast.LENGTH_SHORT).show();
+                }
             }
         }
     };
@@ -260,14 +266,20 @@ public class TrainQueryActivity extends AppCompatActivity implements View.OnClic
                 String trainInfoJSON = msg.obj.toString();
                 //处理时刻表JSON字符串
                 ArrayList<TrainInfo> info = parseTrainQueryInfo(trainInfoJSON);
-                //设置车型
-                train_class.setText(info.get(0).getTrain_class_name());
-                //初始化时刻表RecyclerView
-                TrainInfoAdapter adapter = new TrainInfoAdapter(info);
-                recyclerView.setLayoutManager(new LinearLayoutManager(TrainQueryActivity.this));
-                recyclerView.setAdapter(adapter);
+                if(info == null) {
+                    trainQuery_main.setVisibility(View.VISIBLE);
+                    trainQuery_result.setVisibility(View.GONE);
+                    Toast.makeText(TrainQueryActivity.this, "没有查询到车次信息", Toast.LENGTH_SHORT).show();
+                } else {
+                    //设置车型
+                    train_class.setText(info.get(0).getTrain_class_name());
+                    //初始化时刻表RecyclerView
+                    TrainInfoAdapter adapter = new TrainInfoAdapter(info);
+                    recyclerView.setLayoutManager(new LinearLayoutManager(TrainQueryActivity.this));
+                    recyclerView.setAdapter(adapter);
 
-                Toast.makeText(TrainQueryActivity.this, "主线程更新时刻表", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TrainQueryActivity.this, "主线程更新时刻表", Toast.LENGTH_SHORT).show();
+                }
             }
         }
     };
@@ -299,10 +311,13 @@ public class TrainQueryActivity extends AppCompatActivity implements View.OnClic
             JSONObject object = new JSONObject(jsonStr);
             //第二层数组 数组中的每一个元素都是一个JSONObject
             JSONArray array = object.optJSONArray("data");
-            assert array != null;
+
             //第三层大括号，index = 0 意思是取数组的第一个
             JSONObject data = array.optJSONObject(0);
-
+            if(data == null) {
+                Toast.makeText(TrainQueryActivity.this, "没有查询到相关车次", Toast.LENGTH_SHORT).show();
+                return null;
+            }
             String date = data.optString("date");
             String from_station = data.optString("from_station");
             String station_train_code = data.optString("station_train_code");
@@ -318,8 +333,9 @@ public class TrainQueryActivity extends AppCompatActivity implements View.OnClic
             return train_no;
 
         } catch (JSONException e) {
-            throw new RuntimeException(e);
+            Toast.makeText(this, "没有查询到此车次", Toast.LENGTH_SHORT).show();
         }
+        return null;
     }
 
     /**
@@ -369,11 +385,13 @@ public class TrainQueryActivity extends AppCompatActivity implements View.OnClic
             }
 
             result = builder.toString();
+            return result;
 
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            Toast.makeText(this, "没有查询到车次信息", Toast.LENGTH_SHORT).show();
+            finish();
         }
-        return result;
+        return null;
     }
     /**
      * JSON数据2 时刻表查询
@@ -449,9 +467,21 @@ public class TrainQueryActivity extends AppCompatActivity implements View.OnClic
             return infoList;
 
         } catch (JSONException e) {
-            throw new RuntimeException(e);
+            Toast.makeText(this, "没有查询到此车次", Toast.LENGTH_SHORT).show();
+            
         }
-
+        return null;
     }
 
+    /**
+     * 没有数据时使用
+     * */
+    private void parseErrorMessage(String message) {
+        try {
+            JSONObject object = new JSONObject(message);
+            
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

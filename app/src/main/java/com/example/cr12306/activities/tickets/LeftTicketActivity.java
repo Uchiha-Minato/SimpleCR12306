@@ -162,12 +162,11 @@ public class LeftTicketActivity extends AppCompatActivity {
                 return null;
 
             result = builder.toString();
+            return result;
 
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-        return result;
     }
     /**
      * 解析余票信息JSON数据
@@ -209,9 +208,8 @@ public class LeftTicketActivity extends AppCompatActivity {
             JSONObject object = new JSONObject(jsonStr);
             //第二层数组 数组中的元素是object
             JSONArray array = object.optJSONArray("data");
-            assert array != null;
             //第三层大括号为要取的数据，但还包了一层object
-            for(int i = 0; i < array.length(); i++) {
+            for(int i = 0; i < array.length() ; i++) {
                 JSONObject queryLeftNewDTO = array.optJSONObject(i);
                 JSONObject finalData = queryLeftNewDTO.getJSONObject("queryLeftNewDTO");
 
@@ -335,29 +333,46 @@ public class LeftTicketActivity extends AppCompatActivity {
 
             return tickets;
 
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+        } catch (JSONException|NullPointerException e) {
+            Toast.makeText(this, "请输入正确的数据(日期)", Toast.LENGTH_SHORT).show();
+            finish();
         }
-
+        return null;
     }
     private final Handler handler = new Handler(Looper.myLooper()) {
         @Override
         public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
-
-            if(msg.what == 0) {
-                String data = msg.obj.toString();
-                Toast.makeText(LeftTicketActivity.this, "主线程收到消息", Toast.LENGTH_SHORT).show();
-                //处理JSON字符串
-                tickets = parseLeftTicketJSONData(data);
-                //判断是否筛选只看高铁动车
-                if((getIntent().getStringExtra("filtration")) != null && getIntent().getStringExtra("filtration").equals("只看高铁动车")) {
-                    tickets = filtrateZTK(tickets);
-                    Toast.makeText(LeftTicketActivity.this, "筛选：只看高铁动车", Toast.LENGTH_SHORT).show();
+            String data = msg.obj.toString();
+            try {
+                if(msg.what == 0) {
+                    if(data.startsWith("<!DOC")) {
+                        Toast.makeText(LeftTicketActivity.this, "请输入正确的数据(日期)", Toast.LENGTH_SHORT).show();
+                        /*tickets = new ArrayList<>();
+                        LeftTicket t = new LeftTicket();
+                        t.setSwz_price("无数据");
+                        tickets.add(t);*/
+                        Log.i("ErrorMsg", data);
+                        finish();
+                    } /*else if(data.startsWith("{" + "\"validateMessagesShowId\"")) {
+                        parseErrorMessage(data);
+                    }*/ else {
+                        Toast.makeText(LeftTicketActivity.this, "主线程收到消息", Toast.LENGTH_SHORT).show();
+                        //处理JSON字符串
+                        tickets = parseLeftTicketJSONData(data);
+                        //判断是否筛选只看高铁动车
+                        if((getIntent().getStringExtra("filtration")) != null && getIntent().getStringExtra("filtration").equals("只看高铁动车")) {
+                            tickets = filtrateZTK(tickets);
+                            Toast.makeText(LeftTicketActivity.this, "筛选：只看高铁动车", Toast.LENGTH_SHORT).show();
+                        }
+                        //更新RecyclerView
+                        initRecyclerView(tickets);
+                        Toast.makeText(LeftTicketActivity.this, "主线程更新视图", Toast.LENGTH_SHORT).show();
+                    }
                 }
-                //更新RecyclerView
-                initRecyclerView(tickets);
-                Toast.makeText(LeftTicketActivity.this, "主线程更新视图", Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+                Toast.makeText(LeftTicketActivity.this, "请输入正确的数据", Toast.LENGTH_SHORT).show();
+                finish();
             }
         }
     };
@@ -374,5 +389,24 @@ public class LeftTicketActivity extends AppCompatActivity {
         }
 
         return result;
+    }
+
+    /**
+     * 查询输入错数据时使用
+     * */
+    private void parseErrorMessage(String msg) {
+        try {
+            JSONObject object = new JSONObject(msg);
+            String message;
+            JSONArray array = object.optJSONArray("messages");
+            message = array.optString(1);
+            if(message == null) {
+                Toast.makeText(this, "查询的日期不在预售期内", Toast.LENGTH_SHORT).show();
+                setResult(0);
+                finish();
+            }
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

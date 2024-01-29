@@ -35,6 +35,7 @@ import java.util.ArrayList;
 public class ChooseStationDBUtils {
 
     private static final File PATH = Environment.getExternalStorageDirectory();
+    private static final File PATH2 = new File("/data/data/com.example.cr12306/files/station_names1.json");
     private final StationDBHelper dbHelper;
     private SQLiteDatabase database;
     public Context context;
@@ -83,7 +84,8 @@ public class ChooseStationDBUtils {
      * */
     public Boolean fileExists() {
         try {
-            File file = new File(PATH,"/Android/data/com.example.cr12306/files/station_names1.json");
+            //File file = new File(PATH,"/Android/data/com.example.cr12306/files/station_names1.json");
+            File file = new File("/data/data/com.example.cr12306/files/station_names1.json");
             if(!file.exists())
                 return false;
         } catch (Exception e) {
@@ -100,7 +102,8 @@ public class ChooseStationDBUtils {
      * */
     public void initStations() {
         try {
-            File file = new File(PATH,"/Android/data/com.example.cr12306/files/station_names1.json");
+            //File file = new File(PATH,"/Android/data/com.example.cr12306/files/station_names1.json");
+            File file = new File(PATH2.toURI());
             FileInputStream inputStream = new FileInputStream(file);
             InputStreamReader reader = new InputStreamReader(inputStream);
             BufferedReader bufferedReader = new BufferedReader(reader);
